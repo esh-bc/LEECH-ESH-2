@@ -1,0 +1,25 @@
+name: Run ESH
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Create config.env
+        run: |
+          cp config_sample.env config.env
+
+      - name: Build Docker Image
+        run: |
+          docker build -t wzmlx .
+
+      - name: Run Bot
+        run: |
+          docker run --rm wzmlx
